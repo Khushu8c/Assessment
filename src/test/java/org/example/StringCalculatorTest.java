@@ -35,5 +35,11 @@ public class StringCalculatorTest {
         stringCalculator.addNumber("a");
     }
 
+    @Test
+    public void shouldReturnSumOfGivenForMultipleNumberGivenAsInput() {
+        int expectedSum = 6;
+        assertEquals(expectedSum, stringCalculator.addNumber("1,5"));
+    }
+
 
 }

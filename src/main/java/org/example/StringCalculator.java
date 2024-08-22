@@ -5,7 +5,6 @@ public class StringCalculator {
     public int addNumber(String numbersString) {
         int sumOfNumbers = 0;
         if (numbersString == null || numbersString.isEmpty()) {
-            sumOfNumbers = 0;
         } else {
             int length = numbersString.length();
             if (length == 1) {
