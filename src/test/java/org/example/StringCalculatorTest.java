@@ -41,5 +41,11 @@ public class StringCalculatorTest {
         assertEquals(expectedSum, stringCalculator.addNumber("1,5"));
     }
 
+    @Test(expected = NumberFormatException.class)
+    public void shouldThrowExceptionOnMultipleInvalidInput() {
+        stringCalculator.addNumber("1,a");
+    }
+
+
 
 }
