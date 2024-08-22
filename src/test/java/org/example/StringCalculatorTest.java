@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import static java.lang.Integer.*;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
 
 public class StringCalculatorTest {
 
@@ -27,6 +28,11 @@ public class StringCalculatorTest {
         String input = "1";
         int sum = stringCalculator.addNumber(input);
         assertEquals(parseInt(input), sum);
+    }
+
+    @Test(expected = NumberFormatException.class)
+    public void shouldThrowExceptionOnInvalidInput() {
+        stringCalculator.addNumber("a");
     }
 
 
