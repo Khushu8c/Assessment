@@ -37,8 +37,8 @@ public class StringCalculatorTest {
 
     @Test
     public void shouldReturnSumOfGivenForMultipleNumberGivenAsInput() {
-        int expectedSum = 6;
-        assertEquals(expectedSum, stringCalculator.addNumber("1,5"));
+        assertEquals(6, stringCalculator.addNumber("1,5"));
+        assertEquals(8, stringCalculator.addNumber("1,5,2"));
     }
 
     @Test(expected = NumberFormatException.class)
@@ -46,6 +46,11 @@ public class StringCalculatorTest {
         stringCalculator.addNumber("1,a");
     }
 
-
+    @Test
+    public void shouldReturnSumForGivenInputOnCommaOrNewLineAsDelimeter() {
+        assertEquals(6, stringCalculator.addNumber("1,5"));
+        assertEquals(8, stringCalculator.addNumber("1\n5\n2"));
+        assertEquals(9, stringCalculator.addNumber("1\n5,3"));
+    }
 
 }
