@@ -5,6 +5,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import static java.lang.Integer.*;
+import static org.junit.Assert.assertEquals;
+
 public class StringCalculatorTest {
 
     private StringCalculator stringCalculator;
@@ -14,9 +17,16 @@ public class StringCalculatorTest {
         stringCalculator = new StringCalculator();
     }
     @Test
-    public void shouldReturnZeroForNullOrEmptyString() {
+    public void returnZeroOnEmptyOrNullString() {
         int sum = stringCalculator.addNumber("");
-        Assert.assertEquals("For empty or null string method should return 0", 0, sum);
+        assertEquals( 0, sum);
+    }
+
+    @Test
+    public void returnNumberItselfOnInputStringHasSingleNumber() {
+        String input = "1";
+        int sum = stringCalculator.addNumber(input);
+        assertEquals(parseInt(input), sum);
     }
 
 
