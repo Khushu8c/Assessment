@@ -62,6 +62,7 @@ public class StringCalculatorTest {
     public void dynamicDelimeterShouldSupportAndShouldReturnSum() {
         assertEquals(3, stringCalculator.addNumber("//:\n1:2"));
         assertEquals(5, stringCalculator.addNumber("//;\n2;3"));
+        assertEquals(12, stringCalculator.addNumber("//:;\n5:;7"));
     }
 
     @Test

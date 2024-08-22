@@ -27,25 +27,26 @@ public class StringCalculator {
      * Comma(,), new line character (\n) can be used as separator. ex: "1,5", "1\n5\n2", "1\n5,3"
      * Support of dynamic separator For ex: "//:\n1:2", "//;\n2;3"
      *
-     * @param numbersString
+     * @param inputString
      * @return sumOfNumbers
      */
-    public int addNumber(String numbersString) {
+    public int addNumber(String inputString) {
         int sumOfNumbers = 0;
 
-        if (numbersString != null && !numbersString.isEmpty()) {
-            String delimiterPattern = "//(.)\n";
+        if (inputString != null && !inputString.isEmpty()) {
+            String delimiterPattern = "//(.*?)\n";
             Pattern pattern = Pattern.compile(delimiterPattern);
-            Matcher matcher = pattern.matcher(numbersString);
+            Matcher matcher = pattern.matcher(inputString);
 
             String[] numbers;
             if (matcher.find()) {
-                // replace the delimiter character with whole pattern
-                String delimiter = numbersString.replaceFirst(delimiterPattern, "$1");
-                char c = delimiter.charAt(0);
-                numbers = numbersString.split(delimiterPattern)[1].split(String.valueOf(c)); // Splits based on delimiter
+                String delimiter = matcher.group(1);
+                // Extract the rest of the string after the delimiter definition
+                String data = inputString.split(delimiterPattern, 2)[1];  // Split into two parts: before and after pattern
+                // Use the extracted delimiter to split the rest of the string
+                numbers = data.split(delimiter);
             } else {
-                numbers = numbersString.split("[\\n,]");
+                numbers = inputString.split("[\\n,]");
             }
             List<Integer> negativeNumber = new ArrayList<>();
             for (String s : numbers) {
