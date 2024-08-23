@@ -34,38 +34,46 @@ public class StringCalculator {
         int sumOfNumbers = 0;
 
         if (inputString != null && !inputString.isEmpty()) {
-            String delimiterPattern = "//(.*?)\n";
-            Pattern pattern = Pattern.compile(delimiterPattern);
-            Matcher matcher = pattern.matcher(inputString);
-
-            String[] numbers;
-            if (matcher.find()) {
-                String delimiter = matcher.group(1);
-                // Extract the rest of the string after the delimiter definition
-                String data = inputString.split(delimiterPattern, 2)[1];  // Split into two parts: before and after pattern
-                // Use the extracted delimiter to split the rest of the string
-                numbers = data.split(delimiter);
-            } else {
-                numbers = inputString.split("[\\n,]");
-            }
-            List<Integer> negativeNumber = new ArrayList<>();
-            for (String s : numbers) {
-                int number = Integer.parseInt(s.trim());
-
-                if (number < 0) {
-                    negativeNumber.add(number);
-                }
-            }
-            if (negativeNumber.isEmpty()) {
-                for (String s : numbers) {
-                    int number = Integer.parseInt(s.trim());
-                    sumOfNumbers = sumOfNumbers + number;
-                }
-            } else {
-                throw new RuntimeException("negative numbers  not allowed : " + negativeNumber);
+            String[] numbers = findNumbers(inputString);
+            checkForNegativeNumbers(numbers);
+            for (String number: numbers) {
+                sumOfNumbers = sumOfNumbers + Integer.parseInt(number);
             }
         }
         return sumOfNumbers;
+    }
+
+    private static void checkForNegativeNumbers(String[] numbers) {
+        List<Integer> negativeNumber = new ArrayList<>();
+        for (String s : numbers) {
+            int number = Integer.parseInt(s.trim());
+
+            if (number < 0) {
+                negativeNumber.add(number);
+            }
+        }
+
+        if (!negativeNumber.isEmpty()) {
+            throw new RuntimeException("negative numbers  not allowed : " + negativeNumber);
+        }
+    }
+
+    private static String[] findNumbers(String inputString) {
+        String[] numbers;
+
+        String delimiterPattern = "//(.*?)\n";
+        Pattern pattern = Pattern.compile(delimiterPattern);
+        Matcher matcher = pattern.matcher(inputString);
+        if (matcher.find()) {
+            String delimiter = matcher.group(1);
+            // Extract the rest of the string after the delimiter definition
+            String data = inputString.split(delimiterPattern, 2)[1];  // Split into two parts: before and after pattern
+            // Use the extracted delimiter to split the rest of the string
+            numbers = data.split(delimiter);
+        } else {
+            numbers = inputString.split("[\\n,]");
+        }
+        return numbers;
     }
 
 }
