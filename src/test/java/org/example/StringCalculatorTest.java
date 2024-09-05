@@ -73,4 +73,5 @@ public class StringCalculatorTest {
 
         stringCalculator.addNumber("1,-5,-2");
     }
+
 }
