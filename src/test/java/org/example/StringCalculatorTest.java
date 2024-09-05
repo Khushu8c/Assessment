@@ -1,7 +1,6 @@
 package org.example;
 
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -24,45 +23,45 @@ public class StringCalculatorTest {
     }
     @Test
     public void returnZeroOnEmptyOrNullString() {
-        int sum = stringCalculator.addNumber("");
+        int sum = stringCalculator.performCalculation("");
         assertEquals( 0, sum);
     }
 
     @Test
     public void returnNumberItselfOnInputStringHasSingleNumber() {
         String input = "1";
-        int sum = stringCalculator.addNumber(input);
+        int sum = stringCalculator.performCalculation(input);
         assertEquals(parseInt(input), sum);
     }
 
     @Test(expected = NumberFormatException.class)
     public void shouldThrowExceptionOnInvalidInput() {
-        stringCalculator.addNumber("a");
+        stringCalculator.performCalculation("a");
     }
 
     @Test
     public void shouldReturnSumOfGivenForMultipleNumberGivenAsInput() {
-        assertEquals(6, stringCalculator.addNumber("1,5"));
-        assertEquals(8, stringCalculator.addNumber("1,5,2"));
+        assertEquals(6, stringCalculator.performCalculation("1,5"));
+        assertEquals(8, stringCalculator.performCalculation("1,5,2"));
     }
 
     @Test(expected = NumberFormatException.class)
     public void shouldThrowExceptionOnMultipleInvalidInput() {
-        stringCalculator.addNumber("1,a");
+        stringCalculator.performCalculation("1,a");
     }
 
     @Test
     public void shouldReturnSumForGivenInputOnCommaOrNewLineAsDelimeter() {
-        assertEquals(6, stringCalculator.addNumber("1,5"));
-        assertEquals(8, stringCalculator.addNumber("1\n5\n2"));
-        assertEquals(9, stringCalculator.addNumber("1\n5,3"));
+        assertEquals(6, stringCalculator.performCalculation("1,5"));
+        assertEquals(8, stringCalculator.performCalculation("1\n5\n2"));
+        assertEquals(9, stringCalculator.performCalculation("1\n5,3"));
     }
 
     @Test
     public void dynamicDelimeterShouldSupportAndShouldReturnSum() {
-        assertEquals(3, stringCalculator.addNumber("//:\n1:2"));
-        assertEquals(5, stringCalculator.addNumber("//;\n2;3"));
-        assertEquals(12, stringCalculator.addNumber("//:;\n5:;7"));
+        assertEquals(3, stringCalculator.performCalculation("//:\n1:2"));
+        assertEquals(5, stringCalculator.performCalculation("//;\n2;3"));
+        assertEquals(12, stringCalculator.performCalculation("//:;\n5:;7"));
     }
 
     @Test
@@ -71,7 +70,13 @@ public class StringCalculatorTest {
         thrown.expect(RuntimeException.class);
         thrown.expectMessage("negative numbers  not allowed : [-5, -2]");
 
-        stringCalculator.addNumber("1,-5,-2");
+        stringCalculator.performCalculation("1,-5,-2");
+    }
+
+    @Test
+    public void shouldReturnMultiplyOfNumbersOnAstericAsDelimeter() {
+        assertEquals(2, stringCalculator.performCalculation("//*\n1*2"));
+
     }
 
 }

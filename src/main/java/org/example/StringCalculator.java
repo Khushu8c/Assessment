@@ -30,17 +30,44 @@ public class StringCalculator {
      * @param inputString
      * @return sumOfNumbers
      */
-    public int addNumber(String inputString) {
-        int sumOfNumbers = 0;
+    public int performCalculation(String inputString) {
+        int result = 0;
 
         if (inputString != null && !inputString.isEmpty()) {
-            String[] numbers = findNumbers(inputString);
+            String delimeter = findDelimeter(inputString);
+            if (inputString.contains("*")) {
+                inputString = inputString.substring(inputString.indexOf("\n") + 1);
+            }
+
+            System.out.println("delimerter: " + delimeter);
+
+            String[] numbers = findNumbers(inputString, delimeter);
+
             checkForNegativeNumbers(numbers);
-            for (String number: numbers) {
-                sumOfNumbers = sumOfNumbers + Integer.parseInt(number);
+
+            if (delimeter!= null && delimeter.contains("*")) {
+                result = getMultiplyOfNumbers(numbers);
+            } else {
+                result = getSumOfNumbers(numbers);
             }
         }
+        return result;
+    }
+
+    private static int getSumOfNumbers(String[] numbers) {
+        int sumOfNumbers = 0;
+        for (String number: numbers) {
+            sumOfNumbers = sumOfNumbers + Integer.parseInt(number);
+        }
         return sumOfNumbers;
+    }
+
+    private static int getMultiplyOfNumbers(String[] numbers) {
+        int productOfNumbers = 1;
+        for (String number: numbers) {
+            productOfNumbers = productOfNumbers * Integer.parseInt(number);
+        }
+        return productOfNumbers;
     }
 
     private static void checkForNegativeNumbers(String[] numbers) {
@@ -58,22 +85,40 @@ public class StringCalculator {
         }
     }
 
-    private static String[] findNumbers(String inputString) {
-        String[] numbers;
+    private static String findDelimeter(String inputString) {
+        String delimeter = null;
 
         String delimiterPattern = "//(.*?)\n";
         Pattern pattern = Pattern.compile(delimiterPattern);
         Matcher matcher = pattern.matcher(inputString);
         if (matcher.find()) {
-            String delimiter = matcher.group(1);
+            delimeter = matcher.group(1);
+            if (delimeter.equalsIgnoreCase("*")) {
+                delimeter = "\\*";
+            }
             // Extract the rest of the string after the delimiter definition
-            String data = inputString.split(delimiterPattern, 2)[1];  // Split into two parts: before and after pattern
+           // String data = inputString.split(delimiterPattern, 2)[1];  // Split into two parts: before and after pattern
             // Use the extracted delimiter to split the rest of the string
-            numbers = data.split(delimiter);
+        }
+        return delimeter;
+    }
+
+    private static String[] findNumbers(String numberString, String delimiter) {
+        String[] numbers;
+
+        if (numberString.contains("//")) {
+            numberString = numberString.substring(numberString.indexOf("\n") + 1);
+        }
+
+        if (delimiter != null) {
+            // Use the extracted delimiter to split the rest of the string
+            numbers = numberString.split(delimiter);
         } else {
-            numbers = inputString.split("[\\n,]");
+            numbers = numberString.split("[\\n,]");
         }
         return numbers;
     }
+
+
 
 }
