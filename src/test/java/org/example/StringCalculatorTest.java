@@ -51,14 +51,14 @@ public class StringCalculatorTest {
     }
 
     @Test
-    public void shouldReturnSumForGivenInputOnCommaOrNewLineAsDelimeter() {
+    public void shouldReturnSumForGivenInputOnCommaOrNewLineAsDelimiter() {
         assertEquals(6, stringCalculator.performCalculation("1,5"));
         assertEquals(8, stringCalculator.performCalculation("1\n5\n2"));
         assertEquals(9, stringCalculator.performCalculation("1\n5,3"));
     }
 
     @Test
-    public void dynamicDelimeterShouldSupportAndShouldReturnSum() {
+    public void dynamicDelimiterShouldSupportAndShouldReturnSum() {
         assertEquals(3, stringCalculator.performCalculation("//:\n1:2"));
         assertEquals(5, stringCalculator.performCalculation("//;\n2;3"));
         assertEquals(12, stringCalculator.performCalculation("//:;\n5:;7"));
@@ -74,7 +74,7 @@ public class StringCalculatorTest {
     }
 
     @Test
-    public void shouldReturnMultiplyOfNumbersOnAstericAsDelimeter() {
+    public void shouldReturnMultiplyOfNumbersOnAsteriskAsDelimiter() {
         assertEquals(2, stringCalculator.performCalculation("//*\n1*2"));
 
     }
